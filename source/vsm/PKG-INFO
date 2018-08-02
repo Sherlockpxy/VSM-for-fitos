@@ -1,0 +1,18 @@
+Metadata-Version: 2.3.0-1
+Name: vsm
+Version: 2.3.0-1
+Summary: Virtual Storage Manager
+Home-page: https://github.com/01org/virtual-storage-manager/
+Author: VSM Contributors
+Author-email: ml-node+s33411n1h81@n7.nabble.com
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Environment :: OpenStack/Ceph
+Classifier: Intended Audience :: Information Technology
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
