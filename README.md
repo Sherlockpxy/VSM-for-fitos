@@ -1,7 +1,5 @@
 VSM - Virtual Storage Manager 
 =============================
-Travis CI: [![Build Status](https://travis-ci.org/01org/virtual-storage-manager.svg?branch=master)](https://travis-ci.org/01org/virtual-storage-manager)
-
 ![](https://github.com/01org/virtual-storage-manager/blob/master/vsm_0.jpg "Virtual Storage Manager")
 
 Virtual Storage Manager (VSM) is software that Intel has developed to help manage Ceph clusters.  VSM simplifies 
@@ -23,48 +21,14 @@ VSM has been developed in Python using OpenStack Horizon as the starting point f
 has a familiar look and feel for both software developers and OpenStack administrators. 
 
 
-
-Important Notice and Contact Information
-----------------------------------------
-
-a) Open source VSM does not have a full-time support team and so would not be generally suitable for production use unless you can support it or have support from a third party. Before you use VSM, please understand the need to invest enough effort to learn how to use it effectively and to address possible bugs.
-
-b) To help VSM develop further, please become an active member of the community and consider giving back by making 
-contributions. We intend to make all open source VSM feature proposals public, and do all development publicly.
-
-For other questions, contact yaguang.wang@intel.com or ferber.dan@intel.com
-
-
-Licensing
+Personal Changes
 ---------
+This is a secondary programming result of Intel VSM. In order to fit for new centos version and Fiberhome fitos platform, the code has been modified for serverl times as below:
 
-a) Intel source code is being released under the Apache 2.0 license.
+a) Modify the source code to make it useful in CentOS 7.2 and CentOS 7.4.
 
-b) Additional libraries used with VSM have their own licensing; refer to NOTICE for details.
+b) Change some dependency packages' version or format.
 
+c) Add several shell and python scripts for installation.
 
-Installation & Usage
---------------------
-
-Please refer to INSTALL.md or INSTALL.pdf to know how to install VSM, and [wiki page](https://github.com/01org/virtual-storage-manager/wiki/Getting-Started-with-VSM) to know how to get started.
-
-Contributing
-------------
-
-Please refer to [wiki page](https://github.com/01org/virtual-storage-manager/wiki/VSM-Development) to know how to 
-get involved.
-
-
-Resources
----------
-
-Wiki: (https://github.com/01org/virtual-storage-manager/wiki)
-
-Issue tracking: (https://01.org/jira/browse/VSM)
-
-Mailing list: (http://vsm-discuss.33411.n7.nabble.com/)
-
-
-*Other names and brands may be claimed as the property of others.
-
-
+d) Modify some fuctions, e.g. support flashcache.
