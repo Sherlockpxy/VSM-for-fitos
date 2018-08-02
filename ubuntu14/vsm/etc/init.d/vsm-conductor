@@ -1,0 +1,85 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:             vsm-conductor
+# Required-Start:       $remote_fs $syslog
+# Required-Stop:        $remote_fs $syslog
+# Default-Start:        2 3 4 5
+# Default-Stop:         0 1 6
+# Short-Description:    VSM Storage DB Service works on MySQL
+### END INIT INFO
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+. /lib/lsb/init-functions
+
+NAME=vsm-conductor
+DAEMON=/usr/bin/vsm-conductor
+CONFIGFILE=/etc/vsm/vsm.conf
+PIDFILE=/var/run/vsm/vsm-conductor.pid
+LOGFILE=/var/log/vsm/vsm-conductor.log
+
+test -x $DAEMON || exit 5
+
+LOCKFILE=/var/lock/vsm-conductor
+if [ ! -d /var/run/vsm ]; then
+    mkdir -p /var/run/vsm
+    chown -R vsm /var/run/vsm
+fi
+
+lock_vsmconductor() {
+	if [ -x /usr/bin/lockfile-create ]; then
+		lockfile-create $LOCKFILE
+		lockfile-touch $LOCKFILE &
+		LOCKTOUCHPID="$!"
+	fi
+}
+
+unlock_vsmconductor() {
+	if [ -x /usr/bin/lockfile-create ] ; then
+		kill $LOCKTOUCHPID
+		lockfile-remove $LOCKFILE
+	fi
+}
+
+RUNASUSER=vsm
+
+case $1 in
+	start)
+		log_daemon_msg "Starting VSM server" "vsm-conductor"
+		lock_vsmconductor
+  		start-stop-daemon --start --background --chuid $RUNASUSER --exec $DAEMON -- --config-file=$CONFIGFILE --log-file=$LOGFILE
+  		PID=`ps -ef|grep vsm-conductor|awk -F ' ' '{ if($3==1) print $2 }'`
+  		echo $PID > $PIDFILE
+
+		status=$?
+		unlock_vsmconductor
+		log_end_msg $status
+  		;;
+	stop)
+		log_daemon_msg "Stopping VSM server" "vsm-conductor"
+  		start-stop-daemon --stop --quiet --oknodo --pidfile $PIDFILE
+		log_end_msg $?
+		rm -rf $PIDFILE
+  		;;
+	restart|force-reload)
+		$0 stop && sleep 2 && $0 start
+  		;;
+	try-restart)
+		if $0 status >/dev/null; then
+			$0 restart
+		else
+			exit 0
+		fi
+		;;
+	reload)
+		exit 3
+		;;
+	status)
+		status_of_proc $DAEMON "VSM server vsm-conductor"
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart|try-restart|force-reload|status}"
+		exit 2
+		;;
+esac
