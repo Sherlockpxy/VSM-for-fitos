@@ -1,0 +1,22 @@
+#!/bin/bash
+
+function preinstall_controller() {
+    yum install -y librbd1 rbd-fuse ceph-radosgw mariadb mariadb-server \
+    httpd memcached ntp openssh-server openssl-devel openstack-utils \
+    python-devel rabbitmq-server smartmontools
+}
+
+function preinstall_agent() {
+    yum install -y librbd1 rbd-fuse ceph-radosgw ntp openssh-server \
+    openstack-utils python-devel smartmontools
+}
+
+if [[ $1 ]]; then
+    if [[ $1 == "agent" ]]; then
+        preinstall_agent
+    else
+        preinstall_controller
+    fi
+else
+    preinstall_controller
+fi

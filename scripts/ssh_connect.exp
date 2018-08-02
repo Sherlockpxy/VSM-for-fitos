@@ -1,0 +1,16 @@
+#!/usr/bin/expect -f
+
+###################################
+# This script is used to copy ssh-key to remote hosts
+###################################
+set ip_addr [lindex $argv 0]
+set passwd [lindex $argv 1]
+
+set timeout 30
+
+spawn ssh-copy-id root@$ip_addr
+expect {
+"yes/no" { send "yes\n";exp_continue }
+"password:" { send "$passwd\n";exp_continue }
+}
+
